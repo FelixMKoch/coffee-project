@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:replace="fragments/default :: header" th:remove="tag"></script>
+    <script th:replace="fragments/scripts :: header" th:remove="tag"></script>
+
+    <!-- Datatables -->
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+
+<div th:replace="fragments/scripts :: bodystart" th:remove="tag"></div>
+
+<div class="wrapper">
+
+    <div th:replace="fragments/navigation :: topnavigation" th:remove="tag"></div>
+
+    <div th:replace="fragments/menu_left :: menuleft" th:remove="tag"></div>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Kaffee-Detail</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="beadcrumb-item"><a href="/">Home</a></li>
+                            <span> / </span>
+                            <li class="beadcrumb-item active">kaffee-Detail</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h4 style="text-align: center">Kaffee-Detail</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <table id="ShopTable" class="table table-hover table-sm" width="100%">
+                        <thead>
+                        <tr>
+                            <th><b>Name</b></th>
+                            <th th:text="${shopItem.getName()}"></th>
+                        </tr>
+                        <tr>
+                            <th><b>Ort</b></th>
+                            <th th:text="${shopItem.getPlace()}"></th>
+                        </tr>
+                        <tr>
+                            <th><b>Anzahl Kaffee</b></th>
+                            <th th:text="${coffeeList.size()}"></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h4 style="text-align: center">Kaffee im Angebot</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <table id="coffeeTable" class="table table-hover table-sm" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Brand</th>
+                            <th>Type</th>
+                            <th>Flavour</th>
+                            <th>Detail</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="coffee : ${coffeeList}">
+                            <td th:text="${coffee.getName()}"></td>
+                            <td th:text="${coffee.getBrand()}"></td>
+                            <td th:text="${coffee.getType()}"></td>
+                            <td th:text="${coffee.getFlavour()}"></td>
+                            <td><a th:href="${'/coffee/detail?coffeeId=' + coffee.getId()}">Detail</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div th:replace="fragments/scripts :: bodyend" th:remove="tag"></div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:replace="fragments/default :: header" th:remove="tag"></script>
+    <script th:replace="fragments/scripts :: header" th:remove="tag"></script>
+</head>
+<body class="hold-transition sidebar-mini">
+
+    <div th:replace="fragments/scripts :: bodystart" th:remove="tag"></div>
+
+    <div class="wrapper">
+
+        <div th:replace="fragments/navigation :: topnavigation" th:remove="tag"></div>
+
+        <div th:replace="fragments/menu_left :: menuleft" th:remove="tag"></div>
+
+        <div th:replace="fragments/scripts :: bodyend" th:remove="tag"></div>
+    </div>
+</body>
+</html>

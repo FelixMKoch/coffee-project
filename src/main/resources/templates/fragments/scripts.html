@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <script th:fragment="header" th:remove="tag"></script>
+
+    <div th:fragment="bodystart" th:remove="tag"></div>
+
+    <div th:fragment="bodyend" th:remove="tag">
+
+        <script src="/tmpl_plugins/jquery/jquery.min.js"></script>
+
+        <script src="/tmpl_plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        <script src="/tmpl/js/adminlte.js"></script>
+
+        <script th:inline="javascript">
+            $(document).ready(function() {
+                var url = window.location;
+                if(url != null && (url +"").indexOf("?") != -1) {
+                    url = ("" + url).substring(0,(url + "").indexOf("?"));
+                }
+                $('ul.nav-sidebar a').filter(function() {
+                    return this.href == url;
+                }).addClass('active');
+
+                $('ul.nav-treeview a').filter(function() {
+                    return this.href == null;
+                }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+            });
+        </script>
+
+    </div>
+</body>
+</html>

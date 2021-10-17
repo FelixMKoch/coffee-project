@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:replace="fragments/default :: header" th:remove="tag"></script>
+    <script th:replace="fragments/scripts :: header" th:remove="tag"></script>
+
+</head>
+<body class="hold-transition sidebar-mini">
+
+<div th:replace="fragments/scripts :: bodystart" th:remove="tag"></div>
+
+<div class="wrapper">
+
+    <div th:replace="fragments/navigation :: topnavigation" th:remove="tag"></div>
+
+    <div th:replace="fragments/menu_left :: menuleft" th:remove="tag"></div>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Review</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="beadcrumb-item"><a href="/">Home</a></li>
+                            <span> / </span>
+                            <li class="beadcrumb-item active">Review</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <div>
+                        <h4 style="text-align: center">Review verfassen</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <span th:if="${errormessage != null}"
+                            th:text="${errormessage}"
+                            style="color: red"></span>
+                    <span th:if="${successmessage != null}"
+                          th:text="${successmessage}"
+                          style="color: green"></span>
+
+                    <form id="reviewnew"
+                          role="form"
+                          class="form-horizontal form-label-left"
+                          method="post"
+                          data-th-action="${'/review'}"
+                          th:object="${newReview}">
+                        <div class="card-body">
+                            <!-- Shop -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-lg-2 col-form-label">
+                                    Shop
+                                </label>
+                                <div class="col-sm-9 col-lg-6">
+                                    <select th:name="shop"
+                                            id="shop"
+                                            class="js-example-placeholder-single form-control form-control-sm select2bs4 select2-hidden-accessible"
+                                            th:field="*{shopId}">
+
+                                        <option th:each="shop: ${shopList}"
+                                                th:selected="${shop.getShopId() == newReview.getShopId()}"
+                                                th:value="${shop.getShopId()}"
+                                                th:text="${shop.getName() + ' - ' + shop.getPlace()}">
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <!-- Coffee -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-lg-2 col-form-label">
+                                    Kaffee
+                                </label>
+                                <div class="col-sm-9 col-lg-6">
+                                    <select th:name="coffee"
+                                            id="coffee"
+                                            class="js-example-placeholder-single form-control form-control-sm select2bs4 select2-hidden-accessible"
+                                            th:field="*{coffeeId}">
+
+                                        <option th:each="coffee: ${coffeeList}"
+                                                th:selected="${coffee.getId() == newReview.getCoffeeId()}"
+                                                th:value="${coffee.getId()}"
+                                                th:text="${coffee.getName() + ' - ' + coffee.getBrand() + ' - ' + coffee.getType() + ' - ' + coffee.getFlavour()}">
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-lg-2 col-form-label">
+                                    Preis <small style="color: grey">Falls leer: Default</small>
+                                </label>
+                                <div class="col-sm-9 col-lg-6">
+                                    <input class="form-control col-sm-3"
+                                           min="0"
+                                           type="number"
+                                           step=".01"
+                                           data-th-field="*{price}" />
+                                </div>
+                            </div>
+
+                            <!-- Rating -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-lg-2 col-form-label">
+                                    Bewertung (0 - 10)
+                                </label>
+                                <div class="col-sm-9 col-lg-6">
+                                    <input required="required"
+                                           class="form-control col-sm-3"
+                                           min="0"
+                                           max="10"
+                                           type="number"
+                                           data-th-field="*{rating}" />
+                                </div>
+                            </div>
+
+
+                            <!-- Comment -->
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-lg-2 col-form-label">
+                                    Kommentar
+                                </label>
+                                <div class="col-sm-9 col-lg-6">
+                                    <textarea class="form-control"
+                                              rows="5"
+                                              id="comment"
+                                              data-th-field="*{comment}">
+                                    </textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-footer">
+                            <a href="/#">
+                                <button type="button" class="btn btn-secondary">
+                                    Abbrechen
+                                </button>
+                            </a>
+                            <button type="submit" class="btn btn-primary float-right">Speichern</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+    <div th:replace="fragments/scripts :: bodyend" th:remove="tag"></div>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+
+        <script th:replace="fragments/default :: header" th:remove="tag"></script>
+        <script th:replace="fragments/scripts :: header" th:remove="tag"></script>
+
+        <!-- Datatables -->
+        <link rel="stylesheet" href="/tmpl_plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="/tmpl_plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+        <link rel="stylesheet" href="/tmpl_plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    </head>
+    <body class="hold-transition sidebar-mini">
+
+        <div th:replace="fragments/scripts :: bodystart" th:remove="tag"></div>
+
+        <div class="wrapper">
+
+            <div th:replace="fragments/navigation :: topnavigation" th:remove="tag"></div>
+
+            <div th:replace="fragments/menu_left :: menuleft" th:remove="tag"></div>
+
+            <div class="content-wrapper">
+                <section class="content-header">
+                    <div class="container-fluid">
+                        <div class="row mb-2">
+                            <div class="col-sm-6">
+                                <h1>Kaffee hinzufügen</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="beadcrumb-item"><a href="/">Home</a></li>
+                                    <span> / </span>
+                                    <li class="beadcrumb-item active">Kaffee</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="content">
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
+                        <div>
+                            <h4 style="text-align: center">Kaffee</h4>
+                        </div>
+                        </div>
+                        <div class="card-body">
+                        <form id="coffeenew"
+                                role="form"
+                                class="form-horizontal form-label-left"
+                                method="post"
+                                data-th-action="${'/coffee'}"
+                                th:object="${newCoffee}">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <!-- Name -->
+                                    <label class="col-sm-3 col-lg-2 col-form-label">
+                                        Name
+                                    </label>
+                                    <div class="col-sm-9 col-lg-6">
+                                        <input required="required" class="form-control col-sm-3" type="text" data-th-field="*{name}" />
+                                    </div>
+                                </div>
+                                <!-- Brand -->
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-lg-2 col-form-label">
+                                        Marke
+                                    </label>
+                                    <div class="col-sm-9 col-lg-6">
+                                        <select th:name="brand"
+                                                class="js-example-placeholder-single form-control form-control-sm select2bs4 select2-hidden-accessible col-sm-3"
+                                                th:field="*{brand}"
+                                                id="brandselect">
+
+                                            <option th:each="brand: ${brandList}"
+                                                    th:selected="${brand.getName().equals(newCoffee.getBrand())}"
+                                                    th:value="${brand.getName()}"
+                                                    th:text="${brand.getName()}">
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <!-- Type -->
+                                    <label class="col-sm-3 col-lg-2 col-form-label">
+                                        Type
+                                    </label>
+                                    <div class="col-sm-9 col-lg-6">
+                                        <input required="required" class="form-control col-sm-3" type="text" data-th-field="*{type}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <!-- Flavour -->
+                                    <label class="col-sm-3 col-lg-2 col-form-label">
+                                        Flavour
+                                    </label>
+                                    <div class="col-sm-9 col-lg-6">
+                                        <input required="required" class="form-control col-sm-3" type="text" data-th-field="*{flavour}" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <!-- Plastic -->
+                                    <label class="col-sm-3 col-lg-2 col-form-label">
+                                        TM?
+                                    </label>
+                                    <div>
+                                        <input class="form-check-input" type="checkbox" data-th-field="*{plastic}">
+                                    </div>
+
+                                </div>
+                                <div class="form-group row">
+                                    <!-- Size -->
+                                    <label class="col-sm-3 col-lg-2 col-form-label">
+                                        Inhalt in ml
+                                    </label>
+                                    <div class="col-sm-9 col-lg-6">
+                                        <input required="required" class="form-control col-sm-3" type="number" data-th-field="*{size}" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-footer">
+                                <a href="/#">
+                                    <button type="button" class="btn btn-secondary">
+                                        Abbrechen
+                                    </button>
+                                </a>
+                                <button type="submit" class="btn btn-primary float-right">Speichern</button>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    <div class="card card-outline card-primary">
+                        <div class="card-header">
+                            <h4 style="text-align: center">Kaffee-Liste</h4>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table id="coffeetable" class="table table-hover table-sm" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Marke</th>
+                                        <th>Typ</th>
+                                        <th>Flavour</th>
+                                        <th>Avg Rating</th>
+                                        <th>Inhalt in ml</th>
+                                        <th>TM?</th>
+                                        <th>Detailansicht</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="coffee : ${coffeeList}">
+                                        <td th:text="${coffee.getName()}"></td>
+                                        <td th:text="${coffee.getBrand()}"></td>
+                                        <td th:text="${coffee.getType()}"></td>
+                                        <td th:text="${coffee.getFlavour()}"></td>
+                                        <td th:text="${coffeeRatingMap.getOrDefault(coffee.getId(), '-')}"></td>
+                                        <td th:text="${coffee.getSize()}"></td>
+                                        <td th:text="${coffee.isPlastic() ? 'Ja' : 'Nein'}"></td>
+                                        <td><a th:href="${'/coffee/detail?coffeeId=' + coffee.getId()}">Detail</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div th:replace="fragments/scripts :: bodyend" th:remove="tag"></div>
+
+            <!-- Datatables -->
+        </div>
+
+    <script src="tmpl_plugins/datatables/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#coffeetable').DataTable({
+
+            });
+        } );
+    </script>
+    </body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:replace="fragments/default :: header" th:remove="tag"></script>
+    <script th:replace="fragments/scripts :: header" th:remove="tag"></script>
+
+    <!-- Datatables -->
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+
+<div th:replace="fragments/scripts :: bodystart" th:remove="tag"></div>
+
+<div class="wrapper">
+
+    <div th:replace="fragments/navigation :: topnavigation" th:remove="tag"></div>
+
+    <div th:replace="fragments/menu_left :: menuleft" th:remove="tag"></div>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Review-Detail</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="beadcrumb-item"><a href="/">Home</a></li>
+                            <span> / </span>
+                            <li class="beadcrumb-item active">Review-Detail</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h4 style="text-align: center">Review-Detail</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <table id="coffeetable" class="table table-hover table-sm" width="100%">
+                        <thead>
+                            <tr>
+                                <th><b>Rating</b></th>
+                                <th th:text="${reviewItem.getReview().getRating()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Zeit</b></th>
+                                <th th:text="${reviewItem.getReview().getCreateDate()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Kaffee</b></th>
+                                <th th:text="${reviewItem.getCoffee().getName()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Preis</b></th>
+                                <th th:text="${reviewItem.getReview().getPrice()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Name</b></th>
+                                <th th:text="${reviewItem.getCoffee().getName()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Marke</b></th>
+                                <th th:text="${reviewItem.getCoffee().getBrand()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Typ</b></th>
+                                <th th:text="${reviewItem.getCoffee().getType()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Geschmack</b></th>
+                                <th th:text="${reviewItem.getCoffee().getFlavour()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Shopname</b></th>
+                                <th th:text="${reviewItem.getShop().getName()}"></th>
+                            </tr>
+                            <tr>
+                                <th><b>Ort</b></th>
+                                <th th:text="${reviewItem.getShop().getPlace()}"></th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <div>
+                        <span><b>Kommentar: </b></span>
+                    </div>
+                    <div>
+                        <span th:text="${reviewItem.getReview().getComment()}"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div th:replace="fragments/scripts :: bodyend" th:remove="tag"></div>
+
+</div>
+
+</body>
+</html>

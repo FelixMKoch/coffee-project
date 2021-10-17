@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:replace="fragments/default :: header" th:remove="tag"></script>
+    <script th:replace="fragments/scripts :: header" th:remove="tag"></script>
+
+    <!-- Datatables -->
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/tmpl_plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+</head>
+<body class="hold-transition sidebar-mini">
+
+<div th:replace="fragments/scripts :: bodystart" th:remove="tag"></div>
+
+<div class="wrapper">
+
+    <div th:replace="fragments/navigation :: topnavigation" th:remove="tag"></div>
+
+    <div th:replace="fragments/menu_left :: menuleft" th:remove="tag"></div>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Shop</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="beadcrumb-item"><a href="/">Home</a></li>
+                            <span> / </span>
+                            <li class="beadcrumb-item active">Shop</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <div>
+                        <h4 style="text-align: center">Shop hinzufügen</h4>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <form id="shopnew"
+                          role="form"
+                          class="form-horizontal form-label-left"
+                          method="post"
+                          data-th-action="${'/shop'}"
+                          th:object="${newShop}">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <!-- Name -->
+                                <label class="col-sm-3 col-lg-2 col-form-label">
+                                    Name
+                                </label>
+                                <div class="col-sm-9 col-lg-6">
+                                    <input required="required" class="form-control col-sm-3" type="text" data-th-field="*{name}" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <!-- Place -->
+                                <label class="col-sm-3 col-lg-2 col-form-label">
+                                    Ort
+                                </label>
+                                <div class="col-sm-9 col-lg-6">
+                                    <input required="required" class="form-control col-sm-3" type="text" data-th-field="*{place}" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <a href="/#">
+                                <button type="button" class="btn btn-secondary">
+                                    Abbrechen
+                                </button>
+                            </a>
+                            <button type="submit" class="btn btn-primary float-right">Speichern</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h4 style="text-align: center">Shop-Liste</h4>
+                </div>
+                <div class="card-body table-responsive">
+                    <table id="shoptable" class="table table-hover table-sm" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Ort</th>
+                            <th>Avg Rating</th>
+                            <th>Detail</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="shop : ${shopList}">
+                            <td th:text="${shop.getName()}"></td>
+                            <td th:text="${shop.getPlace()}"></td>
+                            <td th:text="${shopRatingMap.getOrDefault(shop.getShopId(), '-')}"></td>
+                            <td><a th:href="${'/shop/detail?shopId=' + shop.getShopId()}">Detail</a></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div th:replace="fragments/scripts :: bodyend" th:remove="tag"></div>
+
+    <!-- Datatables -->
+</div>
+
+<script src="tmpl_plugins/datatables/jquery.dataTables.min.js"></script>
+<script>
+        $(document).ready(function() {
+            $('#shoptable').DataTable();
+        } );
+    </script>
+</body>
+</html>

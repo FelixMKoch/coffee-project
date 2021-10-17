@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="left-side">
+            <div class="left-side-color">
+                <div class="row left-side-row">
+
+                </div>
+            </div>
+        </div>
+        <div class="right-side">
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-row">
+                    <input type="text" placeholder="Username" class="form-control form-control-sm" name="username">
+                </div>
+                <div class="form-row">
+                    <input type="password" placeholder="Password" class="form-control form-control-sm" name="password">
+                </div>
+                <div class="form-row">
+                    <button class="btn btn-info">Einloggen</button>
+                </div>
+            </form>
+
+            <div th:if="${param.error}" class="loginerror">
+                Falsche Daten für Login eingegeben
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

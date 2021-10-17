@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <script th:replace="fragments/default :: header" th:remove="tag"></script>
+    <script th:replace="fragments/scripts :: header" th:remove="tag"></script>
+
+</head>
+<body class="hold-transition sidebar-mini">
+
+<div th:replace="fragments/scripts :: bodystart" th:remove="tag"></div>
+
+<div class="wrapper">
+
+    <div th:replace="fragments/navigation :: topnavigation" th:remove="tag"></div>
+
+    <div th:replace="fragments/menu_left :: menuleft" th:remove="tag"></div>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Statistik</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="beadcrumb-item"><a href="/">Home</a></li>
+                            <span> / </span>
+                            <li class="beadcrumb-item active">Statistic</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+            <div class="card card-outline card-primary">
+                <div class="card-header">
+                    <h3 class="card-title" style="text-align: center">Statistik-Angaben</h3>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <span th:text="${'Gesamtausgaben: ' + costSum}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${'Durchschnittliche Ausgaben: ' + avgCost}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${'# Kaffee getrunken: ' + coffeeSum}"></span>
+                    </div>
+                    <div>
+                        <span th:text="${'Liter Kaffee getrunken: ' + coffeeMlSum / 1000 +
+                        ' Liter (' + coffeeMlSum + 'ml)'}"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <div th:replace="fragments/scripts :: bodyend" th:remove="tag"></div>
+</div>
+
+</body>
+</html>

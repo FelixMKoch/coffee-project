@@ -1,0 +1,65 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'org.springframework.experimental.aot' version '0.10.4'
+	id 'org.graalvm.buildtools.native' version '0.9.3'
+	id 'org.hibernate.orm'
+}
+
+group = 'de'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	maven { url 'https://repo.spring.io/release' }
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-rest'
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation group: 'org.modelmapper.extensions', name: 'modelmapper-jackson', version: '0.7.3'
+	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.5.5'
+	compileOnly 'org.projectlombok:lombok'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+bootBuildImage {
+	builder = 'paketobuildpacks/builder:tiny'
+	environment = ['BP_NATIVE_IMAGE': 'true']
+}
+
+nativeBuild {
+	classpath processAotResources.outputs, compileAotJava.outputs
+}
+
+nativeTest {
+	classpath processAotTestResources.outputs, compileAotTestJava.outputs
+}
+
+hibernate {
+	enhance {
+		enableLazyInitialization = true
+		enableDirtyTracking = true
+		enableAssociationManagement = true
+		enableExtendedEnhancement = false
+	}
+}
