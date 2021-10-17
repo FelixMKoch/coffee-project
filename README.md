@@ -10,5 +10,9 @@ Technical Details:
  - Postgres-SQL (Port in properties)
  - JQuery
 
+Others:
+ - Templates: [AdminLTE](https://github.com/ColorlibHQ/AdminLTE)
+
 
 ##### Version: 1.0
+
