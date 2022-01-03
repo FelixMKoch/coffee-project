@@ -27,7 +27,7 @@ public class CoffeeDetailController {
 
     @GetMapping("/coffee/detail")
     public String coffeeDetailGet(Model model,
-                                  @RequestParam (required = false) Long coffeeId) {
+                                                 @RequestParam (required = false) Long coffeeId) {
 
         if(coffeeId == null) return "redirect:/coffee";
 
